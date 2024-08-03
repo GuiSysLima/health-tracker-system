@@ -1,0 +1,56 @@
+{% extends 'default.html' %}
+
+{% block title %}Histórico do Smartwatch{% endblock %}
+
+{% block content %}
+<h1>Histórico do Smartwatch - IMEI: {{ smartwatch.imei }}</h1>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Data</th>
+            <th>Hora</th>
+            <th>BPM</th>
+            <th>mmHg</th>
+            <th>Temperatura Corporal</th>
+        </tr>
+    </thead>
+    <tbody id="historico-table-body">
+        {% for entrada in historico %}
+            <tr>
+                <td>{{ entrada.data }}</td>
+                <td>{{ entrada.hora }}</td>
+                <td>{{ entrada.bpm }}</td>
+                <td>{{ entrada.mmhg }}</td>
+                <td>{{ entrada.temperatura_corporal }}</td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="5">Nenhum histórico encontrado.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        function atualizarHistorico() {
+            const url = "{{ request.path }}";
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function(data) {
+                    // Atualiza o conteúdo da tabela
+                    $('#historico-table-body').html($(data).find('#historico-table-body').html());
+                },
+                error: function() {
+                    alert('Erro ao adquirir dados.');
+                }
+            });
+        }
+
+        atualizarHistorico();
+
+        // Atualiza o histórico a cada 10 segundos
+        setInterval(atualizarHistorico, 10000);
+    });
+</script>
+{% endblock %}

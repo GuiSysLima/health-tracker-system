@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SESBOL - Health Tracker{% endblock %}</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+            padding-left: 10px;
+        }
+
+        footer {
+            background-color: #f1f1f1;
+            font-size: 75%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <a href="{% url 'home' %}">Página Principal</a>
+                <a href="{% url 'about' %}">Sobre os Serviços</a>
+                <a href="{% url 'cadastrar_funcionario' %}">Cadastrar Funcionário</a>
+                <a href="{% url 'listar_funcionarios' %}">Listar Funcionários</a>
+                <a href="{% url 'cadastrar_smartwatch' %}">Adicionar Smartwatch</a>
+                <a href="{% url 'listar_smartwatches' %}">Listar Smartwatches</a>
+            </nav>
+        </header>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+        <footer>
+            <nav>
+                <p>&copy; 2024 UFAPE. Todos os direitos reservados.</p>
+            </nav>
+        </footer>
+    </div>
+</body>
+</html>

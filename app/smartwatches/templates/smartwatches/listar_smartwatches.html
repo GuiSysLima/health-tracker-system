@@ -1,0 +1,61 @@
+{% extends 'default.html' %}
+
+{% block title %}Lista de Smartwatches{% endblock %}
+
+{% block content %}
+<h1>Lista de Smartwatches (atualizada a cada 10s)</h1>
+<table border="1">
+    <thead>
+        <tr>
+            <th>IMEI</th>
+            <th>BPM</th>
+            <th>mmHg</th>
+            <th>Temperatura Corporal</th>
+            <th>Funcionário</th>
+            <th>Histórico</th>
+        </tr>
+    </thead>
+    <tbody id="smartwatch-table-body">
+    </tbody>
+</table>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        function fetchSmartwatches() {
+            $.ajax({
+                url: "{% url 'listar_smartwatches' %}",
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    var tableBody = $('#smartwatch-table-body');
+                    tableBody.empty();
+                    if (data.smartwatches.length > 0) {
+                        $.each(data.smartwatches, function(index, smartwatch) {
+                            var row = `<tr>
+                                <td>${smartwatch.imei}</td>
+                                <td>${smartwatch.bpm}</td>
+                                <td>${smartwatch.mmhg}</td>
+                                <td>${smartwatch.temperatura_corporal}</td>
+                                <td>${smartwatch.funcionario}</td>
+                                <td><a href="/smartwatches/${smartwatch.imei}">Ver histórico</a></td>
+                            </tr>`;
+                            tableBody.append(row);
+                        });
+                    } else {
+                        tableBody.append('<tr><td colspan="6">Nenhum smartwatch registrado.</td></tr>');
+                    }
+                },
+                error: function(data) {
+                    alert('Falha na conexão com os Smartwatches');
+                }
+            });
+        }
+
+        fetchSmartwatches();
+
+        // Atualiza todos os smartwatches à cada 10 segundos
+        setInterval(fetchSmartwatches, 10000);
+    });
+</script>
+{% endblock %}
