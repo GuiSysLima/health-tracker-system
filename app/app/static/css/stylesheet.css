@@ -1,11 +1,13 @@
 /* styles.css */
 
-body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
 }
+
 
 .navbar {
     background-color: #333;
@@ -115,6 +117,28 @@ body {
 
 .form-text {
     font-size: 0.875rem;
+}
+
+/* Ajustar o ícone do perfil */
+h1 i.fa-user {
+    color: #007bff; /* Cor do ícone */
+    margin-left: 10px; /* Espaço entre o título e o ícone */
+}
+
+/* Estilo para os cards da seção "Sobre Nós" */
+.card {
+    border: 1px solid #ddd; /* Borda leve */
+    background-color: #f8f9fa; /* Cor de fundo clara */
+    padding: 20px; /* Padding interno */
+    text-align: center; /* Texto centralizado */
+}
+
+.card-img-top {
+    margin-bottom: 15px; /* Espaço entre a imagem e o nome */
+}
+
+.card-title {
+    margin: 0; /* Remove margens adicionais */
 }
 
 

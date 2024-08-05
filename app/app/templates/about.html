@@ -1,8 +1,58 @@
 {% extends 'default.html' %}
 
+{% load static %}
+
 {% block title %}Sobre{% endblock %}
 
 {% block content %}
-<h1>Sobre nós</h1>
-<p>Informações sobre a empresa.</p>
+<div class="container mt-5">
+    <h1 class="mb-4">Sobre Nós</h1>
+    <div class="row">
+        <!-- Card de André -->
+        <div class="col-md-4 mb-4">
+            <div class="card p-3 rounded shadow">
+                <img src="{% static 'images/andre.jpeg' %}" alt="André" class="card-img-top rounded-circle" style="width: 100px; height: 100px; object-fit: cover;">
+                <div class="card-body text-center">
+                    <h5 class="card-title">André</h5>
+                </div>
+            </div>
+        </div>
+        <!-- Card de Davy -->
+        <div class="col-md-4 mb-4">
+            <div class="card p-3 rounded shadow">
+                <img src="{% static 'images/davy.jpg' %}" alt="Davy" class="card-img-top rounded-circle" style="width: 100px; height: 100px; object-fit: cover;">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Davy</h5>
+                </div>
+            </div>
+        </div>
+        <!-- Card de Guilherme -->
+        <div class="col-md-4 mb-4">
+            <div class="card p-3 rounded shadow">
+                <img src="{% static 'images/guilherme.jpg' %}" alt="Guilherme" class="card-img-top rounded-circle" style="width: 100px; height: 100px; object-fit: cover;">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Guilherme</h5>
+                </div>
+            </div>
+        </div>
+        <!-- Card de Henrique -->
+        <div class="col-md-4 mb-4">
+            <div class="card p-3 rounded shadow">
+                <img src="{% static 'images/henrique.jpg' %}" alt="Henrique" class="card-img-top rounded-circle" style="width: 100px; height: 100px; object-fit: cover;">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Henrique</h5>
+                </div>
+            </div>
+        </div>
+        <!-- Card de Max -->
+        <div class="col-md-4 mb-4">
+            <div class="card p-3 rounded shadow">
+                <img src="{% static 'images/max.jpg' %}" alt="Max" class="card-img-top rounded-circle" style="width: 100px; height: 100px; object-fit: cover;">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Max</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
