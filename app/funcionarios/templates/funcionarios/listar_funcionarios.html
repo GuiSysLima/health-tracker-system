@@ -3,31 +3,53 @@
 {% block title %}Lista de Funcionários{% endblock %}
 
 {% block content %}
-<h1>Lista de Funcionários</h1>
-<table border="1">
-    <thead>
-        <tr>
-            <th>Nome Completo</th>
-            <th>Email</th>
-            <th>Idade</th>
-            <th>Altura</th>
-            <th>Peso</th>
-        </tr>
-    </thead>
-    <tbody>
+<div class="container">
+    <h1>Lista de Funcionários</h1>
+    <div class="row mb-3">
+        <div class="col-md-12 mb-3">
+            <a href="{% url 'cadastrar_funcionario' %}" class="btn btn-primary">Adicionar Funcionário</a>
+        </div>
+        <div class="col-md-12 mb-3">
+            <form id="searchForm" action="{% url 'listar_funcionarios' %}" method="get">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <div class="input-group">
+                                <select id="searchType" name="searchType" class="form-control col-md-3">
+                                    <option value="nome">Nome</option>
+                                    <option value="email">Email</option>
+                                    <option value="idade">Idade</option>
+                                    <option value="altura">Altura</option>
+                                    <option value="peso">Peso</option>
+                                </select>
+                                <input type="text" id="search" name="search" class="form-control col-md-7" placeholder="Pesquisar">
+                                <div class="input-group-append col-md-2">
+                                    <button type="submit" class="btn btn-primary w-100"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
         {% for funcionario in funcionarios %}
-        <tr>
-            <td>{{ funcionario.nome_completo }}</td>
-            <td>{{ funcionario.email }}</td>
-            <td>{{ funcionario.idade }}</td>
-            <td>{{ funcionario.altura }}</td>
-            <td>{{ funcionario.peso }}</td>
-        </tr>
+        <div class="col-md-3 mb-4">
+            <div class="funcionario-card p-3 rounded shadow">
+                <div class="d-flex justify-content-between align-items-center">
+                    <i class="fa-solid fa-user fa-3x"></i>
+                    <a href="{% url 'perfil_funcionario' funcionario.id %}" class="btn btn-info btn-sm">Ver Perfil</a>
+                </div>
+                <h5 class="mt-3">{{ funcionario.nome_completo }}</h5>
+                <i class="fas fa-trash fa-2x text-danger"></i>
+            </div>
+        </div>
         {% empty %}
-        <tr>
-            <td colspan="5">Nenhum funcionário encontrado.</td>
-        </tr>
+        <div class="col-12">
+            <p>Nenhum funcionário encontrado.</p>
+        </div>
         {% endfor %}
-    </tbody>
-</table>
+    </div>
+</div>
 {% endblock %}

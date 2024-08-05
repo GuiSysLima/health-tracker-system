@@ -1,0 +1,12 @@
+<!-- templates/funcionarios/perfil_funcionario.html -->
+{% extends 'default.html' %}
+
+{% block title %}Perfil de {{ funcionario.nome_completo }}{% endblock %}
+
+{% block content %}
+<h1>Perfil de {{ funcionario.nome_completo }}</h1>
+<p>Email: {{ funcionario.email }}</p>
+<p>Idade: {{ funcionario.idade }}</p>
+<p>Altura: {{ funcionario.altura }}</p>
+<p>Peso: {{ funcionario.peso }}</p>
+{% endblock %}
