@@ -18,6 +18,14 @@ html, body {
     color: #fff !important;
 }
 
+.dropdown-menu .dropdown-item {
+    color: #000 !important; /* Cor do texto dos itens do menu */
+}
+
+.dropdown-menu .dropdown-item:hover {
+    color: #007bff !important; /* Cor do texto dos itens do menu ao passar o mouse */
+}
+
 .nav-link:hover, .dropdown-item:hover {
     color: #f8f9fa !important;
 }
@@ -32,17 +40,31 @@ html, body {
 
 
 /* Estilo para os cartões de funcionários */
+
 .funcionario-card {
-    background-color: #f8f9fa; /* Cor de fundo clara */
-    border: 1px solid #ddd; /* Borda leve */
-    padding: 20px; /* Padding interno */
-    border-radius: 8px; /* Bordas arredondadas */
-    text-align: center; /* Texto centralizado */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    border-radius: 10px; /* Aumenta o arredondamento das bordas */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Adiciona sombra */
+    padding: 15px;
+    text-align: center;
 }
 
 .funcionario-card h5 {
-    margin-top: 15px;
+    margin-top: 15px 0;
+}
+
+.funcionario-card i {
+    font-size: 3rem; /* Ajusta o tamanho do ícone */
+}
+
+.funcionario-card .btn-info {
+    margin-top: 10px; /* Adiciona espaçamento acima do botão "Ver Perfil" */
+}
+
+.funcionario-card .btn-danger {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 30%; /* Torna o botão circular */
 }
 
 .funcionario-card i.fa-trash {
@@ -52,6 +74,37 @@ html, body {
 
 .funcionario-card i.fa-trash:hover {
     color: #dc3545; /* Cor vermelha ao passar o mouse */
+}
+
+.funcionario-card .btn-excluir {
+    padding: 0.2rem 0.4rem; /* Menor padding para diminuir o botão */
+    font-size: 0.8rem; /* Tamanho da fonte menor */
+    border-radius: 50%; /* Mantém o botão circular */
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.funcionario-card .btn-excluir i {
+    font-size: 1rem; /* Ajusta o tamanho do ícone dentro do botão */
+}
+
+.btn-add-funcionario {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 60px; /* Ajuste conforme necessário */
+    background-color: #007bff; /* Cor azul */
+    border-radius: 8px; /* Bordas arredondadas */
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem; /* Ajuste o tamanho do ícone conforme necessário */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-add-funcionario i {
+    margin: 0;
 }
 
 /* Estilos adicionais para o input de pesquisa */
@@ -127,10 +180,18 @@ h1 i.fa-user {
 
 /* Estilo para os cards da seção "Sobre Nós" */
 .card {
-    border: 1px solid #ddd; /* Borda leve */
-    background-color: #f8f9fa; /* Cor de fundo clara */
-    padding: 20px; /* Padding interno */
-    text-align: center; /* Texto centralizado */
+    border-radius: 15px; /* Bordas arredondadas */
+    border: 1px solid #007bff; /* Cor da borda */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
+
+.card-body {
+    padding: 20px;
+}
+
+
+.card-text {
+    margin-bottom: 10px;
 }
 
 .card-img-top {
@@ -138,14 +199,22 @@ h1 i.fa-user {
 }
 
 .card-title {
-    margin: 0; /* Remove margens adicionais */
+    font-size: 1.25rem;
+    margin-bottom: 15px;
 }
 
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
 
 .container {
     max-width: 960px;
     flex: 1;
 }
+
+
+/* Adicione seu CSS customizado aqui */
 
 footer {
     text-align: center;
@@ -155,4 +224,24 @@ footer {
     position: relative;
     bottom: 0;
     width: 100%;
+}
+
+/* Estilo para tabela */
+.table-responsive {
+    margin-top: 20px;
+}
+
+.table thead th {
+    background-color: #343a40;
+    color: white;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0,0,0,.05);
+}
+
+.card-body {
+    border-radius: 10px;
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+    box-shadow: 9px 9px 16px #d1d1d1, -9px -9px 16px #ffffff;
 }

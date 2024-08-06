@@ -1,3 +1,4 @@
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import FuncionarioForm
 from .models import Funcionario
@@ -48,3 +49,13 @@ def listar_funcionarios(request):
 def perfil_funcionario(request, id):
     funcionario = get_object_or_404(Funcionario, id=id)
     return render(request, 'funcionarios/perfil_funcionario.html', {'funcionario': funcionario})
+
+def excluir_funcionario(request, funcionario_id):
+    if request.method == 'POST':
+        funcionario = get_object_or_404(Funcionario, pk=funcionario_id)
+        if funcionario.smartwatch:
+            funcionario.smartwatch.delete()  # Exclui o smartwatch vinculado
+        funcionario.delete()  # Exclui o funcionário
+        return redirect('listar_funcionarios')
+    else:
+        return HttpResponseForbidden("Método não permitido.")
