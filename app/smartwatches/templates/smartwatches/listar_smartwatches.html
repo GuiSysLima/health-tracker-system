@@ -4,20 +4,11 @@
 
 {% block content %}
 <h1>Lista de Smartwatches (atualizada a cada 10s)</h1>
-<table border="1">
-    <thead>
-        <tr>
-            <th>IMEI</th>
-            <th>BPM</th>
-            <th>mmHg</th>
-            <th>Temperatura Corporal</th>
-            <th>Funcionário</th>
-            <th>Histórico</th>
-        </tr>
-    </thead>
-    <tbody id="smartwatch-table-body">
-    </tbody>
-</table>
+<div class="container mt-4">
+    <div class="row" id="smartwatch-container">
+        <!-- Os cartões serão inseridos aqui pelo JavaScript -->
+    </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -28,22 +19,27 @@
                 type: "GET",
                 dataType: "json",
                 success: function(data) {
-                    var tableBody = $('#smartwatch-table-body');
-                    tableBody.empty();
+                    var container = $('#smartwatch-container');
+                    container.empty();
                     if (data.smartwatches.length > 0) {
                         $.each(data.smartwatches, function(index, smartwatch) {
-                            var row = `<tr>
-                                <td>${smartwatch.imei}</td>
-                                <td>${smartwatch.bpm}</td>
-                                <td>${smartwatch.mmhg}</td>
-                                <td>${smartwatch.temperatura_corporal}</td>
-                                <td>${smartwatch.funcionario}</td>
-                                <td><a href="/smartwatches/${smartwatch.imei}">Ver histórico</a></td>
-                            </tr>`;
-                            tableBody.append(row);
+                            var card = `
+                                <div class="col-md-4 mb-4">
+                                    <div class="card border-primary rounded-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Smartwatch IMEI: ${smartwatch.imei}</h5>
+                                            <p class="card-text"><strong>BPM:</strong> ${smartwatch.bpm}</p>
+                                            <p class="card-text"><strong>mmHg:</strong> ${smartwatch.mmhg}</p>
+                                            <p class="card-text"><strong>Temperatura Corporal:</strong> ${smartwatch.temperatura_corporal}</p>
+                                            <p class="card-text"><strong>Funcionário:</strong> ${smartwatch.funcionario}</p>
+                                            <a href="/smartwatches/${smartwatch.imei}" class="btn btn-primary">Ver histórico</a>
+                                        </div>
+                                    </div>
+                                </div>`;
+                            container.append(card);
                         });
                     } else {
-                        tableBody.append('<tr><td colspan="6">Nenhum smartwatch registrado.</td></tr>');
+                        container.append('<p>Nenhum smartwatch registrado.</p>');
                     }
                 },
                 error: function(data) {
@@ -54,8 +50,9 @@
 
         fetchSmartwatches();
 
-        // Atualiza todos os smartwatches à cada 10 segundos
+        // Atualiza todos os smartwatches a cada 10 segundos
         setInterval(fetchSmartwatches, 10000);
     });
 </script>
+
 {% endblock %}

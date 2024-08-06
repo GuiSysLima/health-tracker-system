@@ -1,0 +1,29 @@
+{% extends 'default.html' %}
+
+{% block title %}Perfil do Funcionário{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4 d-flex justify-content-between align-items-center">
+        Perfil do Funcionário
+        <i class="fa-solid fa-user fa-2x"></i> <!-- Ícone adicionado -->
+    </h1>
+    
+    <!-- Links para Navegação -->
+    <div class="mb-3">
+        <a href="{% url 'home' %}" class="btn btn-secondary">Página Principal</a>
+        <a href="{% url 'listar_funcionarios' %}" class="btn btn-secondary">Voltar à Lista de Funcionários</a>
+    </div>
+
+    <!-- Detalhes do Funcionário -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ funcionario.nome_completo }}</h5>
+            <p class="card-text"><strong>Email:</strong> {{ funcionario.email }}</p>
+            <p class="card-text"><strong>Idade:</strong> {{ funcionario.idade }}</p>
+            <p class="card-text"><strong>Altura:</strong> {{ funcionario.altura }} cm</p>
+            <p class="card-text"><strong>Peso:</strong> {{ funcionario.peso }} kg</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

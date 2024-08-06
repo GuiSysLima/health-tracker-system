@@ -3,54 +3,58 @@
 {% block title %}Histórico do Smartwatch{% endblock %}
 
 {% block content %}
-<h1>Histórico do Smartwatch - IMEI: {{ smartwatch.imei }}</h1>
-<table border="1">
-    <thead>
+<h1>Histórico do Smartwatch (IMEI: {{ smartwatch.imei }})</h1>
+
+<table id="historico-table" class="table table-bordered table-striped table-hover" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    <thead class="thead-dark">
         <tr>
             <th>Data</th>
-            <th>Hora</th>
             <th>BPM</th>
             <th>mmHg</th>
             <th>Temperatura Corporal</th>
         </tr>
     </thead>
-    <tbody id="historico-table-body">
-        {% for entrada in historico %}
-            <tr>
-                <td>{{ entrada.data }}</td>
-                <td>{{ entrada.hora }}</td>
-                <td>{{ entrada.bpm }}</td>
-                <td>{{ entrada.mmhg }}</td>
-                <td>{{ entrada.temperatura_corporal }}</td>
-            </tr>
-        {% empty %}
-            <tr><td colspan="5">Nenhum histórico encontrado.</td></tr>
-        {% endfor %}
+    <tbody>
+        <!-- Os registros serão preenchidos pelo JavaScript -->
     </tbody>
 </table>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        function atualizarHistorico() {
-            const url = "{{ request.path }}";
+        const imei = "{{ smartwatch.imei }}"; // Pega o IMEI do smartwatch
+        const url = `{% url 'historico_smartwatch_json' imei=smartwatch.imei %}`; // URL para a view JSON
+        
+        function fetchHistorico() {
             $.ajax({
                 url: url,
                 type: "GET",
+                dataType: "json",
                 success: function(data) {
-                    // Atualiza o conteúdo da tabela
-                    $('#historico-table-body').html($(data).find('#historico-table-body').html());
+                    const tableBody = $('#historico-table tbody');
+                    tableBody.empty();
+                    if (data.registros.length > 0) {
+                        $.each(data.registros, function(index, registro) {
+                            const row = `<tr>
+                                <td>${registro.data}</td>
+                                <td>${registro.bpm}</td>
+                                <td>${registro.mmhg}</td>
+                                <td>${registro.temperatura_corporal}°C</td>
+                            </tr>`;
+                            tableBody.append(row);
+                        });
+                    } else {
+                        tableBody.append('<tr><td colspan="4">Nenhum registro encontrado.</td></tr>');
+                    }
                 },
                 error: function() {
-                    alert('Erro ao adquirir dados.');
+                    alert('Falha ao buscar os registros.');
                 }
             });
         }
 
-        atualizarHistorico();
-
-        // Atualiza o histórico a cada 10 segundos
-        setInterval(atualizarHistorico, 10000);
+        fetchHistorico();
+        setInterval(fetchHistorico, 1000); // Atualiza a cada segundo
     });
 </script>
 {% endblock %}

@@ -101,3 +101,7 @@ def listar_smartwatches(request):
 
     smartwatches = Smartwatch.objects.all()
     return render(request, 'smartwatches/listar_smartwatches.html', {'smartwatches': smartwatches})
+
+def historico_smartwatch_json(request, imei):
+    registros = SmartwatchHistory.objects.filter(smartwatch__imei=imei).values('data', 'bpm', 'mmhg', 'temperatura_corporal')
+    return JsonResponse({'registros': list(registros)})
