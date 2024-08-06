@@ -1,4 +1,4 @@
-*.venv/
-*.ideia/
+.venv/
+.ideia/
 */__pycache__/
 */0001_initial.py
