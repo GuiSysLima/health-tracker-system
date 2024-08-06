@@ -1,6 +1,23 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+<style>
+    body {
+        background-image: url({% static 'images/bg.jpg' %});
+        background-size: cover;
+    }
+    h2 {
+        color: #266799;
+        text-align: center;
+    }
+    h1 {
+        color: #266799;
+        text-align: center;
+    }
+    p {
+        text-align: justify;
+    }
+</style>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,7 +29,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-primary" style="height: 80px;">
-        <a class="navbar-brand" href="{% url 'home' %}">SESBOL - Health Tracker</a>
+        <a class="navbar-brand" href="{% url 'home' %}"><img style="width: 40px" src="{% static 'images/icon.png' %}">SESBOL - Health Tracker</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -26,8 +43,8 @@
                         Funcionários
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{% url 'cadastrar_funcionario' %}">Cadastrar Funcionário</a>
-                        <a class="dropdown-item" href="{% url 'listar_funcionarios' %}">Listar Funcionários</a>
+                        <a class="dropdown-item" href="{% url 'cadastrar_funcionario' %}">Cadastrar</a>
+                        <a class="dropdown-item" href="{% url 'listar_funcionarios' %}">Listar</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -35,8 +52,9 @@
                         Smartwatches
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{% url 'cadastrar_smartwatch' %}">Adicionar Smartwatch</a>
-                        <a class="dropdown-item" href="{% url 'listar_smartwatches' %}">Listar Smartwatches</a>
+                        <a class="dropdown-item" href="{% url 'cadastrar_smartwatch' %}">Adicionar</a>
+                        <a class="dropdown-item" href="{% url 'listar_smartwatches' %}">Listar</a>
+                        <a class="dropdown-item" href="{% url 'search_smartwatches' %}">Online</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -46,7 +64,7 @@
         </div>
     </nav>
     
-    <div class="container mt-4 animate__animated animate__fadeIn">
+    <div class="content container mt-4 animate__animated animate__fadeIn">
         {% block content %}
         {% endblock %}
     </div>

@@ -1,0 +1,66 @@
+{% extends 'default.html' %}
+
+{% block title %}Smartwatches Online{% endblock %}
+
+{% block content %}
+    <h1>Smartwatches Online</h1>
+    <h5>*Atualizada a cada 10s</h5>
+    <div class="container mt-4">
+        <div class="row" id="smartwatch-container">
+            <!-- Os cartões serão inseridos aqui pelo JavaScript -->
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            function fetchSmartwatches() {
+                $.ajax({
+                    url: "{% url 'search_smartwatches' %}",
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        var container = $('#smartwatch-container');
+                        container.empty();
+                        if (data.smartwatches.length > 0) {
+                            $.each(data.smartwatches, function (index, smartwatch) {
+                                let haveFunc = smartwatch.funcionario_id != 0;
+                                var card = `
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card border-primary rounded-3">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Smartwatch IMEI: ${smartwatch.imei}</h5>
+                                                <p class="card-text"><strong>Port:</strong> ${smartwatch.port}</p>
+                                                <p class="card-text"><strong>BPM:</strong> ${smartwatch.bpm}</p>
+                                                <p class="card-text"><strong>mmHg:</strong> ${smartwatch.mmhg}</p>
+                                                <p class="card-text"><strong>Temperatura Corporal:</strong> ${smartwatch.temperature}</p>
+                                                <p class="card-text"><strong>Funcionário:</strong> ${smartwatch.funcionario_nome}</p>
+                                            `
+                                    if (haveFunc)
+                                        card += `<a href="/smartwatches/${smartwatch.imei}" class="btn btn-primary">Ver histórico</a>`
+                                    else
+                                        card += `-`
+                                    card+=`
+                                            </div>
+                                        </div>
+                                    </div>`;
+                                container.append(card);
+                            });
+                        } else {
+                            container.append('<p>Nenhum smartwatch registrado.</p>');
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+                });
+            }
+
+            fetchSmartwatches();
+
+            // Atualiza todos os smartwatches a cada 5 segundos
+            setInterval(fetchSmartwatches, 5000);
+        });
+    </script>
+
+{% endblock %}

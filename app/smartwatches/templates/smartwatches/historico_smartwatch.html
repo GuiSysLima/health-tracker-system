@@ -9,13 +9,24 @@
     <thead class="thead-dark">
         <tr>
             <th>Data</th>
+            <th>Hora</th>
             <th>BPM</th>
             <th>mmHg</th>
             <th>Temperatura Corporal</th>
         </tr>
     </thead>
     <tbody>
-        <!-- Os registros serão preenchidos pelo JavaScript -->
+        {% for entrada in historico %}
+            <tr>
+                <td>{{ entrada.data }}</td>
+                <td>{{ entrada.hora }}</td>
+                <td>{{ entrada.bpm }}</td>
+                <td>{{ entrada.mmhg }}</td>
+                <td>{{ entrada.temperatura_corporal }}</td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="5">Nenhum histórico encontrado.</td></tr>
+        {% endfor %}
     </tbody>
 </table>
 
@@ -37,9 +48,10 @@
                         $.each(data.registros, function(index, registro) {
                             const row = `<tr>
                                 <td>${registro.data}</td>
+                                <td>${registro.hora}</td>
                                 <td>${registro.bpm}</td>
                                 <td>${registro.mmhg}</td>
-                                <td>${registro.temperatura_corporal}°C</td>
+                                <td>${registro.temperatura_corporal}</td>
                             </tr>`;
                             tableBody.append(row);
                         });
