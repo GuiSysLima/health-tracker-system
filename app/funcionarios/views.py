@@ -8,12 +8,19 @@ def cadastrar_funcionario(request):
         form = FuncionarioForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('listar_funcionarios')
+            request.content_params.update({'msg': "Funcionário salvo com êxito!"})
+            request.path = '/funcionarios/listar'
+            return listar_funcionarios(request)
     else:
         form = FuncionarioForm()
     return render(request, 'funcionarios/cadastrar_funcionario.html', {'form': form})
 
 def listar_funcionarios(request):
+    msg = request.content_params.get("msg")
+    if msg:
+        del request.content_params["msg"]
+    else:
+        msg = ""
     search_query = request.GET.get('search', '')
     search_type = request.GET.get('searchType', 'nome')
 
@@ -50,12 +57,15 @@ def perfil_funcionario(request, id):
     funcionario = get_object_or_404(Funcionario, id=id)
     return render(request, 'funcionarios/perfil_funcionario.html', {'funcionario': funcionario})
 
-def excluir_funcionario(request, funcionario_id):
-    if request.method == 'POST':
-        funcionario = get_object_or_404(Funcionario, pk=funcionario_id)
-        if funcionario.smartwatch:
-            funcionario.smartwatch.delete()  # Exclui o smartwatch vinculado
-        funcionario.delete()  # Exclui o funcionário
-        return redirect('listar_funcionarios')
-    else:
-        return HttpResponseForbidden("Método não permitido.")
+def excluir_funcionario(request, id):
+    msg = ''
+    try:
+        funcionario = Funcionario.objects.get(pk=id)
+        funcionario.delete()
+        msg = "Funcionário excluído com êxito!"
+    except Funcionario.DoesNotExist:
+        msg = "Funcionário não encontrado!"
+    except Exception as e:
+        msg = str(e)
+    request.content_params.update({'msg': msg})
+    return listar_funcionarios(request)

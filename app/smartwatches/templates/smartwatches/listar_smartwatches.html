@@ -3,56 +3,54 @@
 {% block title %}Lista de Smartwatches{% endblock %}
 
 {% block content %}
-<h1>Lista de Smartwatches (atualizada a cada 10s)</h1>
-<div class="container mt-4">
-    <div class="row" id="smartwatch-container">
-        <!-- Os cartões serão inseridos aqui pelo JavaScript -->
+    <h1>Lista de Smartwatches (atualizada a cada 10s)</h1>
+    <div class="container mt-4">
+        <div class="row" id="smartwatch-container">
+            <!-- Os cartões serão inseridos aqui pelo JavaScript -->
+        </div>
     </div>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        function fetchSmartwatches() {
-            $.ajax({
-                url: "{% url 'listar_smartwatches' %}",
-                type: "GET",
-                dataType: "json",
-                success: function(data) {
-                    var container = $('#smartwatch-container');
-                    container.empty();
-                    if (data.smartwatches.length > 0) {
-                        $.each(data.smartwatches, function(index, smartwatch) {
-                            var card = `
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            function fetchSmartwatches() {
+                $.ajax({
+                    url: "{% url 'listar_smartwatches' %}",
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        var container = $('#smartwatch-container');
+                        container.empty();
+                        if (data.smartwatches.length > 0) {
+                            $.each(data.smartwatches, function (index, smartwatch) {
+                                var card = `
                                 <div class="col-md-4 mb-4">
                                     <div class="card border-primary rounded-3">
                                         <div class="card-body">
                                             <h5 class="card-title">Smartwatch IMEI: ${smartwatch.imei}</h5>
-                                            <p class="card-text"><strong>BPM:</strong> ${smartwatch.bpm}</p>
-                                            <p class="card-text"><strong>mmHg:</strong> ${smartwatch.mmhg}</p>
-                                            <p class="card-text"><strong>Temperatura Corporal:</strong> ${smartwatch.temperatura_corporal}</p>
+                                            <p class="card-text status-tag"><strong>Status:</strong> ${smartwatch.status}</p>
                                             <p class="card-text"><strong>Funcionário:</strong> ${smartwatch.funcionario}</p>
                                             <a href="/smartwatches/${smartwatch.imei}" class="btn btn-primary">Ver histórico</a>
                                         </div>
                                     </div>
                                 </div>`;
-                            container.append(card);
-                        });
-                    } else {
-                        container.append('<p>Nenhum smartwatch registrado.</p>');
+                                container.append(card);
+                            });
+                        } else {
+                            container.append('<p>Nenhum smartwatch registrado.</p>');
+                        }
+                    },
+                    error: function (data) {
+                        alert('Falha na conexão com os Smartwatches');
                     }
-                },
-                error: function(data) {
-                    alert('Falha na conexão com os Smartwatches');
-                }
-            });
-        }
+                });
+            }
 
-        fetchSmartwatches();
+            fetchSmartwatches();
 
-        // Atualiza todos os smartwatches a cada 10 segundos
-        setInterval(fetchSmartwatches, 10000);
-    });
-</script>
+            // Atualiza todos os smartwatches a cada 10 segundos
+            setInterval(fetchSmartwatches, 20000);
+        });
+    </script>
 
 {% endblock %}

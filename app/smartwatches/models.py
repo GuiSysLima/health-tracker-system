@@ -2,14 +2,8 @@ from django.db import models
 
 from funcionarios.models import Funcionario
 
-
 class Smartwatch(models.Model):
     imei = models.CharField(max_length=255, primary_key=True)
-    data = models.DateField()
-    hora = models.TimeField()
-    bpm = models.IntegerField()
-    mmhg = models.CharField(max_length=10)
-    temperatura_corporal = models.CharField(max_length=8)
     funcionario = models.OneToOneField(Funcionario, on_delete=models.CASCADE, related_name='smartwatch')
 
     def __str__(self):
